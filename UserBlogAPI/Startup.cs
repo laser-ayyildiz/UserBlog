@@ -6,6 +6,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using UserBlogAPI.Repositories;
+using UserBlogAPI.Repositories.Interfaces;
+using UserBlogAPI.Services;
+using UserBlogAPI.Services.Interfaces;
 
 namespace UserBlogAPI
 {
@@ -34,6 +38,9 @@ namespace UserBlogAPI
                     options.AddLinq();
                 })
                 .AddCouchbaseBucket<INamedBucketProvider>("Users");
+
+            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IUserService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Couchbase.Extensions.DependencyInjection;
@@ -5,6 +6,7 @@ using Couchbase.Linq;
 using Microsoft.AspNetCore.Mvc;
 using UserBlogAPI.Data;
 using UserBlogAPI.Models;
+using UserBlogAPI.Services.Interfaces;
 
 namespace UserBlogAPI.Controllers
 {
@@ -12,27 +14,18 @@ namespace UserBlogAPI.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly INamedBucketProvider _bucketProvider;
+        private readonly IUserService _userService;
 
-        public UserController(INamedBucketProvider bucketProvider)
+        public UserController(IUserService userService)
         {
-            _bucketProvider = bucketProvider;
+            _userService = userService;
         }
 
         // GET
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var bucketContext = new BucketContext(await _bucketProvider.GetBucketAsync());
-            var users = bucketContext
-                .Query<User>()
-                .Select(x => new UserDto()
-                {
-                    Id = N1QlFunctions.Meta(x).Id,
-                    Name = x.Name,
-                })
-                .ToList();
-
+            var users = await _userService.GetAllAsync();
             return Ok(users);
         }
     }
