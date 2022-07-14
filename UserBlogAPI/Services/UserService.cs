@@ -21,5 +21,18 @@ namespace UserBlogAPI.Services
             var users = await _userRepository.GetAllAsync();
             return users.Select(UserDto.Of).ToList();
         }
+
+        public async Task<UserDto> GetByIdAsync(string id)
+        {
+            var user = await _userRepository.GetByIdAsync(id);
+            return UserDto.Of(user);
+        }
+
+        public async Task<UserDto> Create(UserCreateDto userCreateDto)
+        {
+            await _userRepository.CreateAsync(userCreateDto);
+            var user = await _userRepository.GetByIdAsync(userCreateDto.Username);
+            return UserDto.Of(user);
+        }
     }
 }

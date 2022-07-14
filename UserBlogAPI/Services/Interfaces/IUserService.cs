@@ -8,5 +8,9 @@ namespace UserBlogAPI.Services.Interfaces
     public interface IUserService
     {
         Task<List<UserDto>> GetAllAsync();
+        
+        Task<UserDto> GetByIdAsync(string id);
+
+        Task<UserDto> Create(UserCreateDto userCreateDto);
     }
 }

@@ -1,10 +1,5 @@
-using System;
-using System.Linq;
 using System.Threading.Tasks;
-using Couchbase.Extensions.DependencyInjection;
-using Couchbase.Linq;
 using Microsoft.AspNetCore.Mvc;
-using UserBlogAPI.Data;
 using UserBlogAPI.Models;
 using UserBlogAPI.Services.Interfaces;
 
@@ -27,6 +22,21 @@ namespace UserBlogAPI.Controllers
         {
             var users = await _userService.GetAllAsync();
             return Ok(users);
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IActionResult> GetById(string id)
+        {
+            var user = await _userService.GetByIdAsync(id);
+            return Ok(user);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(UserCreateDto userCreateDto)
+        {
+            var user = await _userService.Create(userCreateDto);
+            return Ok(user);
         }
     }
 }

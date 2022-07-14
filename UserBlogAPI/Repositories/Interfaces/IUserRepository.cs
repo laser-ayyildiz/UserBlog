@@ -1,13 +1,16 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Couchbase.Extensions.DependencyInjection;
-using Couchbase.Management.Buckets;
 using UserBlogAPI.Data;
+using UserBlogAPI.Models;
 
 namespace UserBlogAPI.Repositories.Interfaces
 {
     public interface IUserRepository
     {
-        public Task<List<User>> GetAllAsync();
+        Task<List<User>> GetAllAsync();
+
+        Task<User> GetByIdAsync(string id);
+
+        Task CreateAsync(UserCreateDto user);
     }
 }

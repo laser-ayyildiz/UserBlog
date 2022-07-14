@@ -1,8 +1,8 @@
 using System;
 
-namespace UserBlogAPI.Data
+namespace UserBlogAPI.Models
 {
-    public class User
+    public class UserCreateDto
     {
         public string Username { get; set; }
 
