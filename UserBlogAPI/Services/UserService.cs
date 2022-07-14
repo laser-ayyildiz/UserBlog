@@ -28,11 +28,23 @@ namespace UserBlogAPI.Services
             return UserDto.Of(user);
         }
 
-        public async Task<UserDto> Create(UserCreateDto userCreateDto)
+        public async Task<UserDto> CreateAsync(UserCreateDto userCreateDto)
         {
             await _userRepository.CreateAsync(userCreateDto);
             var user = await _userRepository.GetByIdAsync(userCreateDto.Username);
             return UserDto.Of(user);
+        }
+
+        public async Task<bool> DeleteAsync(string id)
+        {
+            var isDeleted = await _userRepository.DeleteAsync(id);
+            return isDeleted;
+        }
+
+        public async Task<bool> UpdateAsync(string id, UserUpdateDto userDto)
+        {
+            var isUpdated = await _userRepository.UpdateAsync(id, userDto);
+            return isUpdated;
         }
     }
 }

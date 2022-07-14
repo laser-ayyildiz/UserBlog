@@ -35,7 +35,23 @@ namespace UserBlogAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(UserCreateDto userCreateDto)
         {
-            var user = await _userService.Create(userCreateDto);
+            var user = await _userService.CreateAsync(userCreateDto);
+            return Ok(user);
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            var user = await _userService.DeleteAsync(id);
+            return Ok(user);
+        }
+
+        [HttpPut]
+        [Route("{id}")]
+        public async Task<IActionResult> Update(string id, UserUpdateDto userDto)
+        {
+            var user = await _userService.UpdateAsync(id, userDto);
             return Ok(user);
         }
     }
